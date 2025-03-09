@@ -1,6 +1,6 @@
-def main():
-    print("Hello from simple-rag-web!")
+"""main"""
 
+from app import app
 
 if __name__ == "__main__":
-    main()
+    app.run()
