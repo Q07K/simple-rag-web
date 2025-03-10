@@ -3,7 +3,7 @@
 import streamlit as st
 
 
-def set_title():
+def set_title_style():
     """set streamlit h1(title) style"""
 
     style = """
