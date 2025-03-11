@@ -37,4 +37,5 @@ with st.form(key="login", border=False):
         if error_message:
             col.error(f"잘못된 ({" / ".join(error_message)}) 입니다.")
         else:
+            st.session_state["is_loggedin"] = True
             st.switch_page(page="pages/chat_page.py")
