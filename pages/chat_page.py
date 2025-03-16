@@ -3,12 +3,16 @@ import streamlit as st
 from schemas.message_response import MessageModel
 from services.set_styles import set_styles
 from widgets.chats import first_chat_widget
+from widgets.side_bar_widget import sidebar
 
 if not st.session_state.get("is_loggedin", default=False):
     st.switch_page("pages/login_page.py")
 
 # Set styles
 set_styles()
+
+# Set Side Bar
+sidebar()
 
 # Main page
 if "messages" not in st.session_state:
