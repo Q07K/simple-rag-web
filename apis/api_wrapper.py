@@ -2,6 +2,7 @@ import json
 from typing import Any, Self
 
 import requests
+from pydantic import BaseModel
 
 from apis import api_url
 
@@ -36,16 +37,16 @@ class ApiWrapper:
         with requests.Session() as c:
             c.post(url=api_url.LOGOUT, cookies=self.cookies)
 
-    def get(self, url: str) -> Any | None:
+    def get(self, url: str, schema: BaseModel) -> Any | None:
         with requests.Session() as c:
             response = c.get(
                 url=url,
                 cookies=self.cookies,
             )
         if response.status_code == 200:
-            return json.loads(response.text)
+            return schema(**json.loads(response.text))
 
-    def post(self, url: str, data: Any) -> Any | None:
+    def post(self, url: str, data: Any, schema: BaseModel) -> Any | None:
         with requests.Session() as c:
             response = c.post(
                 url=url,
@@ -53,13 +54,13 @@ class ApiWrapper:
                 cookies=self.cookies,
             )
         if response.status_code == 200:
-            return json.loads(response.text)
+            return schema(**json.loads(response.text))
 
-    def delete(self, url: str) -> Any | None:
+    def delete(self, url: str, schema: BaseModel) -> Any | None:
         with requests.Session() as c:
             response = c.post(
                 url=url,
                 cookies=self.cookies,
             )
         if response.status_code == 200:
-            return json.loads(response.text)
+            return schema(**json.loads(response.text))
