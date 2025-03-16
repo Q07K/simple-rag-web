@@ -1,7 +1,7 @@
 import streamlit as st
 
-from apis.chats_api import get_messages_by_chat_id
 from schemas.chat_response import ChatModel
+from services.chats_service import delete_chat, get_messages
 
 
 def chat_session_block(model: ChatModel):
@@ -12,8 +12,8 @@ def chat_session_block(model: ChatModel):
             label=model.name,
             key=f"title_{model.id}",
             use_container_width=True,
-            on_click=get_messages_by_chat_id,
-            args=model.id,
+            on_click=get_messages,
+            kwargs={"chat_id": model.id},
         )
 
     with right_field.container():
@@ -21,4 +21,6 @@ def chat_session_block(model: ChatModel):
             label="🗑️",
             key=f"delete_{model.id}",
             use_container_width=True,
+            on_click=delete_chat,
+            kwargs={"model": model},
         )
