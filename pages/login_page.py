@@ -1,7 +1,9 @@
 import streamlit as st
 
+from apis import auth_api
 from services.login_validator import email_validator, password_validator
 from services.set_styles import set_styles
+from widgets.login.dialog import login_page_dialog
 
 set_styles()
 
@@ -28,14 +30,13 @@ with st.form(key="login", border=False):
         label="login",
         use_container_width=True,
     ):
-        error_message = []
         if not email_validator(email=email):
-            error_message.append("email")
-        if not password_validator(password=password):
-            error_message.append("password")
-
-        if error_message:
-            col.error(f"잘못된 ({" / ".join(error_message)}) 입니다.")
+            login_page_dialog("Email 형식을 다시 확인해주세요.")
+        elif not password_validator(password=password):
+            login_page_dialog("Password 형식을 다시 확인해주세요.")
         else:
-            st.session_state["is_loggedin"] = True
-            st.switch_page(page="pages/chat_page.py")
+            if auth_api.login(email=email, password=password):
+                st.session_state["is_loggedin"] = True
+                st.switch_page(page="pages/chat_page.py")
+            else:
+                login_page_dialog("(email / password)를 다시 확인해주세요.")
