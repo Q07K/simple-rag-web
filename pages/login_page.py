@@ -8,7 +8,7 @@ set_styles()
 with st.form(key="login", border=False):
     _, col, _ = st.columns([0.2, 0.6, 0.2])
 
-    col.title(body="Welcom")
+    col.title(body="Welcome")
 
     email = col.text_input(
         label="Email",
