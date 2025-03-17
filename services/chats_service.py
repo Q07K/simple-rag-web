@@ -21,5 +21,7 @@ def delete_chat(model: ChatModel):
     if delete_yes:
         with st.spinner("처리중..."):
             chats_api.delete_chat_by_chat_id(chat_id=model.id)
+        st.rerun()
+
     if delete_no:
         st.rerun()
