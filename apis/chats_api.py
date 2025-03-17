@@ -1,6 +1,8 @@
 from apis import api_url
 from apis.api_wrapper import ApiWrapper
+from schemas.chat_request import ChatInitiateRequest
 from schemas.chat_response import ChatsResponse
+from schemas.chat_stream import ChatStream
 from schemas.message_response import MessagesResponse
 
 
@@ -19,4 +21,16 @@ def delete_chat_by_chat_id(chat_id: str) -> ChatsResponse | None:
     return ApiWrapper().delete(
         url=api_url.CHATS + f"/{chat_id}",
         schema=ChatsResponse,
+    )
+
+
+def generate_initiate(temperature: float, max_tokens: int, query: str):
+    return ApiWrapper().stream(
+        url=api_url.CHATS + "/initiate",
+        data=ChatInitiateRequest(
+            temperature=temperature,
+            max_tokens=max_tokens,
+            query=query,
+        ).model_dump_json(),
+        schema=ChatStream,
     )
