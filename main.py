@@ -1,4 +1,5 @@
 import streamlit as st
+from dotenv import load_dotenv
 
 
 def main():
@@ -6,5 +7,6 @@ def main():
 
 
 if __name__ == "__main__":
+    load_dotenv()
     main()
     st.switch_page("pages/login_page.py")
