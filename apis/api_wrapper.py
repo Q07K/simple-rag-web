@@ -56,9 +56,21 @@ class ApiWrapper:
         if response.status_code == 200:
             return schema(**json.loads(response.text))
 
+    def stream(self, url: str, data: Any, schema: BaseModel):
+        c = requests.Session()
+        with c.post(
+            url=url,
+            data=data,
+            cookies=self.cookies,
+            stream=True,
+        ) as response:
+            for response_line in response.iter_lines():
+                if response_line:
+                    yield schema(**json.loads(response_line))
+
     def delete(self, url: str, schema: BaseModel) -> Any | None:
         with requests.Session() as c:
-            response = c.post(
+            response = c.delete(
                 url=url,
                 cookies=self.cookies,
             )
