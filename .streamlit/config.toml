@@ -1,0 +1,14 @@
+[server]
+headless = true
+runOnSave = true
+allowRunOnSave = true
+fastReruns = true
+fileWatcherType = "auto"
+
+[client]
+showSidebarNavigation = false
+
+[theme]
+primaryColor="#3E5879"
+backgroundColor="#FCFCFC"
+secondaryBackgroundColor="#F0EBE3"
