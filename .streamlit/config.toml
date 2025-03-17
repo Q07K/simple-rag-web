@@ -1,5 +1,9 @@
 [server]
+headless = true
 runOnSave = true
+allowRunOnSave = true
+fastReruns = true
+fileWatcherType = "auto"
 
 [client]
 showSidebarNavigation = false
